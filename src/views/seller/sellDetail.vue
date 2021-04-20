@@ -56,13 +56,13 @@ export default {
   },
   methods: {
     editSaleInfo () {
-      let src = '';
+      let src = ''
       if (this.$route.query.saleInfo) {
-        src = 'http://115.28.106.108:8999/SaleCar/UpdateSale'
+        src = '/SaleCar/UpdateSale'
       } else {
-        src = 'http://115.28.106.108:8999/SaleCar/AddSale'
+        src = '/SaleCar/AddSale'
       }
-      let params = {
+      const params = {
         CarId: this.$route.query.CarId,
         SaleId: this.$route.query.SaleId,
         ...this.formData

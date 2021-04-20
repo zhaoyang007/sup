@@ -1,13 +1,14 @@
 <template>
   <div class="payfor-list">
     <div class="title">
-      赔付金额：{{ payforMoney }}
+      赔付金额：{{ payforMoney }} 元
     </div>
-    <van-cell 
-      center 
+    <van-cell
+      center
       v-for="(item, index) in payforList"
       :key="index"
-      :title="`${item.PayOutMoney}元 - ${item.PayOutReason} - ${item.PayOutTimeStr} - ${item.Customer}`" />
+      :title="`赔付金额:${item.PayOutMoney}元 - 赔付时间:${item.PayOutTimeStr}`"
+      :label="`客户:${item.Customer} - 赔付原因:${item.PayOutReason}`" />
   </div>
 </template>
 
@@ -29,12 +30,12 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('http://115.28.106.108:8999/SupCar/PayOutList', params)
+      this.axios.get('/SupCar/PayOutList', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
             this.payforMoney = data.PayOutMoney
-            this.payforList = data.data || [];
+            this.payforList = data.data || []
           } else {
             Toast({
               message: data.msg,

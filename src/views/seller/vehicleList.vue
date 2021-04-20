@@ -8,8 +8,8 @@
       <van-tab title="售完(欠款未收)"></van-tab>
     </van-tabs>
     <div class="list">
-      <van-cell 
-        v-for="(item, index) in vehicleList" 
+      <van-cell
+        v-for="(item, index) in vehicleList"
         :key="index"
         :title="`${item.Carlience}-${item.FruitType}-${item.AllNums}件-${item.AllWeight}斤-${item.SupName}-${item.SupPhone}`">
         <template>
@@ -34,7 +34,7 @@ export default {
     }
   },
   created () {
-    this.getVehicleList();
+    this.getVehicleList()
   },
   methods: {
     // 获取车辆列表
@@ -42,12 +42,12 @@ export default {
       const params = {
         SaleId: this.$route.query.SaleId
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/Carlist', params)
+      this.axios.post('/SaleCar/Carlist', params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.vehicleListCopy = data.data || [];
-            this.vehicleList = [].concat(this.vehicleListCopy);
+            this.vehicleListCopy = data.data || []
+            this.vehicleList = [].concat(this.vehicleListCopy)
           } else {
             Toast({
               message: data.msg,
@@ -63,8 +63,8 @@ export default {
     },
     // tab切换
     tabClick (name) {
-      this.activeTab = name;
-      name = name - 1;
+      this.activeTab = name
+      name = name - 1
       if (name < 0) {
         this.vehicleList = [].concat(this.vehicleListCopy)
       } else {
@@ -72,15 +72,16 @@ export default {
       }
     },
     // 修改车辆状态
-    changeVehicleState(id, state) {
+    changeVehicleState (id, state) {
       const params = {
         CarId: id,
         State: state
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/ChagenState', params)
+      this.axios.post('/SaleCar/ChagenState', params)
         .then(res => {
+          const data = res.data
           if (data.code === 0) {
-            this.getVehicleList();
+            this.getVehicleList()
           } else {
             Toast({
               message: data.msg,
@@ -96,18 +97,18 @@ export default {
     },
     // 售卖信息
     toSellList (id) {
-      this.$router.push({ 
+      this.$router.push({
         path: '/seller/sellList',
-        query: { 
+        query: {
           CarId: id
         }
       })
     },
     // 赔付信息
     toPayforList (id) {
-      this.$router.push({ 
+      this.$router.push({
         path: '/seller/payforList',
-        query: { 
+        query: {
           CarId: id
         }
       })

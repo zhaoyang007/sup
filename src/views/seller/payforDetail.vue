@@ -32,13 +32,13 @@ export default {
   },
   methods: {
     editPayfor () {
-      let src = '';
+      let src = ''
       if (this.$route.query.payforInfo) {
-        src = 'http://115.28.106.108:8999/SaleCar/UpdatePayOut'
+        src = '/SaleCar/UpdatePayOut'
       } else {
-        src = 'http://115.28.106.108:8999/SaleCar/AddPayOut'
+        src = '/SaleCar/AddPayOut'
       }
-      let params = {
+      const params = {
         CarId: this.$route.query.CarId,
         SaleId: this.$route.query.SaleId,
         ...this.formData

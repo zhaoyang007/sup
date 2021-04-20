@@ -15,11 +15,11 @@
     </div>
     <van-button type="info" size="small" class="frush" @click="getSaleInfo">刷 新</van-button>
     <van-button type="info" size="small" @click="toSellDetail('')" style="margin-left: 20px;">添加售卖信息</van-button>
-    <van-cell 
+    <van-cell
       v-for="(item, index) in saleInfo.accountLists"
       :key="index"
-      center 
-      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum}`" 
+      center
+      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum}`"
       :label="`${item.IsPayStr} - ${item.CreateTimeStr}`">
       <template>
         <van-button type="info" size="mini" v-if="item.IsPay === 0" @click.stop="changePayState(item.id, item.IsPay)">已付</van-button>
@@ -41,7 +41,7 @@ export default {
         Paid_Amount: '',
         Balance_Amount: '',
         PaidOut_Amoubt: '',
-        Total_Nums: '', 
+        Total_Nums: '',
         Total_Weight: '',
         SaleId: 1,
         accountLists: []
@@ -57,11 +57,11 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/SaleList', params)
+      this.axios.post('/SaleCar/SaleList', params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.saleInfo = data;
+            this.saleInfo = data
           } else {
             Toast({
               message: data.msg,
@@ -91,7 +91,7 @@ export default {
           FlagType: item.FlagType
         }
       }
-      this.$router.push({ 
+      this.$router.push({
         path: '/seller/sellDetail',
         query: {
           CarId: this.$route.query.CarId,
@@ -106,10 +106,11 @@ export default {
         Id: id,
         State: state
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/UpdatePay', params)
+      this.axios.post('/SaleCar/UpdatePay', params)
         .then(res => {
+          const data = res.data
           if (data.code === 0) {
-            this.getSaleInfo();
+            this.getSaleInfo()
           }
           Toast({
             message: data.msg,
@@ -127,10 +128,11 @@ export default {
       const params = {
         id
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/DeleteSale', params)
+      this.axios.post('/SaleCar/DeleteSale', params)
         .then(res => {
+          const data = res.data
           if (data.code === 0) {
-            this.getSaleInfo();
+            this.getSaleInfo()
           }
           Toast({
             message: data.msg,

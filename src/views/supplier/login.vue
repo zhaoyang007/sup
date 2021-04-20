@@ -27,7 +27,7 @@ export default {
   name: 'SupLogin',
   data () {
     return {
-      userName: '供应商18410109769',
+      userName: '18410109769',
       passWord: '123456'
     }
   },
@@ -37,13 +37,13 @@ export default {
         userName: this.userName,
         passWord: this.passWord
       }
-      this.axios.post('http://115.28.106.108:8999/User/Login', params)
+      this.axios.get('/User/Login', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.$router.push({ 
-              path: '/supplier/vehicleList', 
-              query: { 
+            this.$router.push({
+              path: '/supplier/vehicleList',
+              query: {
                 SupId: data.SupId
               }
             })

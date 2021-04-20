@@ -6,7 +6,7 @@
       <van-field v-model="formData.DriverPhone" type="tel" label="司机电话" placeholder="请输入" />
       <van-field v-model="formData.CarCost" type="number" label="车辆成本" placeholder="请输入" />
       <van-field v-model="formData.AllNums" type="number" label="总件数" placeholder="请输入" />
-      <van-field v-model="formData.AllNums" type="number" label="总重量" placeholder="请输入" />
+      <van-field v-model="formData.AllWeight" type="number" label="总重量" placeholder="请输入" />
       <van-field
         readonly
         clickable
@@ -80,7 +80,10 @@ export default {
       // 选择器
       fruitColumns: [],
       sellerColumns: [],
-      chargeColumns: [],
+      chargeColumns: [
+        { ChargeId: 2, ChargeName: '按斤量计费' },
+        { ChargeId: 1, ChargeName: '按件数计费' }
+      ],
       fruitShowPicker: false,
       sellerShowPicker: false,
       chargeShowPicker: false,
@@ -101,7 +104,7 @@ export default {
       },
       FruitName: '',
       SalerName: '',
-      ChargeName: '',
+      ChargeName: ''
     }
   },
   created () {
@@ -110,14 +113,14 @@ export default {
     this.getFruitList()
     // 获取编辑信息
     if (this.$route.query.CarId) {
-      this.getCarDetail();
+      this.getCarDetail()
     }
   },
   methods: {
     // 选择确认
     fruitOnConfirm (value) {
       this.FruitName = value.FruitType
-      this.formData.FruitTypeId = value.id
+      this.formData.FruitTypeId = value.Id
       this.fruitShowPicker = false
     },
     sellerOnConfirm (value) {
@@ -135,14 +138,15 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('http://115.28.106.108:8999/SupCar/GetEditCar', params)
+      this.axios.get('/SupCar/GetEditCar', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
             // 获取表单值
+            this.formData.Id = data.data.Id
             this.formData.Carlience = data.data.Carlience
             this.formData.DriverName = data.data.DriverName
-            this.formData.DriverPhone = data.data.DriverPhone
+            this.formData.DriverPhone = data.data.DirverPhone
             this.formData.CarCost = data.data.CarCost
             this.formData.AllNums = data.data.AllNums
             this.formData.AllWeight = data.data.AllWeight
@@ -150,7 +154,7 @@ export default {
             this.formData.SaleId = data.data.SaleId
             this.formData.ChargType = data.data.ChargType
             // 获取下拉选择默认值
-            const fruitIndex = this.fruitColumns.findIndex(item => item.id === this.formData.FruitTypeId)
+            const fruitIndex = this.fruitColumns.findIndex(item => item.Id === this.formData.FruitTypeId)
             this.fruitDefaultValue = fruitIndex
             this.FruitName = this.fruitColumns[fruitIndex].FruitType
             const salerIndex = this.sellerColumns.findIndex(item => item.SalerId === this.formData.SaleId)
@@ -176,20 +180,19 @@ export default {
     editVehicle () {
       let url = ''
       if (this.$route.query.CarId) {
-        url = 'http://115.28.106.108:8999/SupCar/UpdateCar'
+        url = '/SupCar/UpdateCar'
       } else {
-        url = 'http://115.28.106.108:8999/SupCar/AddCar'
+        url = '/SupCar/AddCar'
       }
       const params = {
         ...this.formData,
-        SupId: this.$route.query.SupId,
-        CarState: this.$route.query.CarState || null,
+        SupId: this.$route.query.SupId
       }
       this.axios.post(url, params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.$route.push({
+            this.$router.push({
               path: '/supplier/vehicleList',
               query: {
                 SupId: this.$route.query.SupId
@@ -209,7 +212,10 @@ export default {
     },
     // 获取供应商下拉列表
     getSaleList () {
-      this.axios.get('http://115.28.106.108:8999/SupCar/GetSales')
+      const params = {
+        SupId: this.$route.query.SupId
+      }
+      this.axios.get('/SupCar/GetSales', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
@@ -229,11 +235,12 @@ export default {
     },
     // 获取水果下拉列表
     getFruitList () {
-      this.axios.get('http://115.28.106.108:8999/SupCar/GetFruit')
+      this.axios.get('/SupCar/GetFruit')
         .then(res => {
           const data = res.data
           if (data.code === 0) {
             this.fruitColumns = data.data || []
+            console.log(this.fruitColumns)
           } else {
             Toast({
               message: data.msg,

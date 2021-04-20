@@ -4,8 +4,8 @@
       赔付金额：{{ payforMoney }}
     </div>
     <van-button type="info" size="small" @click="toPayforDetail('')" style="margin-bottom: 20px;">添加赔付信息</van-button>
-    <van-cell 
-      center 
+    <van-cell
+      center
       v-for="(item, index) in payforList"
       :key="index"
       :title="`${item.PayOutMoney}元 - ${item.PayOutReason} - ${item.PayOutTimeStr} - ${item.Customer}`">
@@ -36,7 +36,7 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/PayOutList', params)
+      this.axios.post('/SaleCar/PayOutList', params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
@@ -66,9 +66,9 @@ export default {
           Customer: item.Customer
         }
       }
-      this.$router.push({ 
-        path: '/seller/payforDetail', 
-        query: { 
+      this.$router.push({
+        path: '/seller/payforDetail',
+        query: {
           CarId: this.$route.query.CarId,
           SaleId: this.SaleId,
           payforInfo
@@ -79,7 +79,7 @@ export default {
       const params = {
         id
       }
-      this.axios.post('http://115.28.106.108:8999/SaleCar/DeletePayOut', params)
+      this.axios.post('/SaleCar/DeletePayOut', params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
