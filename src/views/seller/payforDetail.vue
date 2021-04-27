@@ -1,8 +1,8 @@
 <template>
   <div class="payfor-detail">
     <van-form>
-      <van-field v-model="formData.PayOutMoney" type="number" label="赔付金额" placeholder="请输入" />
-      <van-field v-model="formData.PayOutReason" label="赔付原因" placeholder="请输入" />
+      <van-field v-model="formData.PayOutMoney" type="number" required label="赔付金额" placeholder="请输入" />
+      <van-field v-model="formData.PayOutReason" required label="赔付原因" placeholder="请输入" />
       <van-field v-model="formData.Customer" label="客户" placeholder="请输入" />
     </van-form>
     <div style="margin-top: 100px;">

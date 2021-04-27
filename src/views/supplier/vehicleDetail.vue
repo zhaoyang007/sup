@@ -1,16 +1,17 @@
 <template>
   <div class="vehicle-detail">
     <van-form>
-      <van-field v-model="formData.Carlience" label="车牌号" placeholder="请输入" />
-      <van-field v-model="formData.DriverName" label="司机姓名" placeholder="请输入" />
-      <van-field v-model="formData.DriverPhone" type="tel" label="司机电话" placeholder="请输入" />
+      <van-field v-model="formData.Carlience" required label="车牌号" placeholder="请输入" />
+      <van-field v-model="formData.DriverName" required label="司机姓名" placeholder="请输入" />
+      <van-field v-model="formData.DriverPhone" required type="tel" label="司机电话" placeholder="请输入" />
       <van-field v-model="formData.CarCost" type="number" label="车辆成本" placeholder="请输入" />
-      <van-field v-model="formData.AllNums" type="number" label="总件数" placeholder="请输入" />
-      <van-field v-model="formData.AllWeight" type="number" label="总重量" placeholder="请输入" />
+      <van-field v-model="formData.AllNums" type="number" label="总件数" placeholder="和总重量二选一必填" />
+      <van-field v-model="formData.AllWeight" type="number" label="总重量" placeholder="和总件数二选一必填" />
       <van-field
         readonly
         clickable
         name="picker"
+        required
         label="水果"
         placeholder="请选择"
         :value="FruitName"
@@ -20,6 +21,7 @@
         readonly
         clickable
         name="picker"
+        required
         label="销售商"
         placeholder="请选择"
         :value="SalerName"

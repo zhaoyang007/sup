@@ -3,8 +3,8 @@
     <van-form>
       <van-field v-model="formData.ProductCount" type="number" label="数量" placeholder="请输入" />
       <van-field v-model="formData.ProductWeight" type="number" label="重量" placeholder="请输入" />
-      <van-field v-model="formData.UnitPrice" type="number" label="单价" placeholder="请输入" />
-      <van-field v-model="formData.TotalPrice" type="number" label="总价" placeholder="请输入" />
+      <van-field v-model="formData.UnitPrice" type="number" required label="单价" placeholder="请输入" />
+      <van-field v-model="formData.TotalPrice" type="number" required label="总价" placeholder="请输入" />
       <van-field v-model="formData.Customer" label="客户" placeholder="请输入" />
       <van-field v-model="formData.CustomerPhone" type="tel" label="客户电话" placeholder="请输入" />
       <van-field name="radio" label="付款情况">

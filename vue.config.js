@@ -4,7 +4,7 @@ module.exports = {
     port: 8080,
     proxy: {
       '/User': {
-        target: 'http://115.28.106.108:8999/User',
+        target: 'http://115.28.106.108:8991/User',
         changeOrigin: true,
         pathRewrite:{
           '^/User': ''
@@ -18,7 +18,7 @@ module.exports = {
         }
       },
       '/SaleCar': {
-        target: 'http://115.28.106.108:8999/SaleCar',
+        target: 'http://115.28.106.108:8991/SaleCar',
         changeOrigin: true,
         pathRewrite:{
           '^/SaleCar': ''

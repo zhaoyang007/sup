@@ -27,7 +27,7 @@ export default {
   name: 'SalLogin',
   data () {
     return {
-      userName: '销售商18410109769',
+      userName: 'wlt',
       passWord: '123456'
     }
   },
@@ -37,7 +37,7 @@ export default {
         userName: this.userName,
         passWord: this.passWord
       }
-      this.axios.post('/User/Login', params)
+      this.axios.get('/User/Login', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {

@@ -1,30 +1,35 @@
 <template>
   <div class="sell-list">
     <div class="title">
-      <van-row type="flex" justify="space-around" style="margin-bottom: 10px;">
-        <van-col span="6">售卖总金额:{{ saleInfo.Total_Amount }}</van-col>
-        <van-col span="6">到账金额:{{ saleInfo.Paid_Amount }}</van-col>
-        <van-col span="6">欠款金额:{{ saleInfo.Balance_Amount }}</van-col>
-        <van-col span="6">赔付金额:{{ saleInfo.PaidOut_Amoubt }}</van-col>
+      <van-row gutter="10">
+        <van-col span="12">售卖总金额:{{ saleInfo.Total_Amount }}</van-col>
+        <van-col span="12">到账金额:{{ saleInfo.Paid_Amount }}</van-col>
       </van-row>
-      <van-row type="flex" justify="space-around" style="margin-bottom: 10px;">
-        <van-col span="8">售卖总件数:{{ saleInfo.Total_Nums }}</van-col>
-        <van-col span="8">售卖总重量:{{ saleInfo.Total_Weight }}</van-col>
-        <van-col span="8">售卖均价:{{ saleInfo.Total_Amount }}</van-col>
+      <van-row gutter="10">
+        <van-col span="12">欠款金额:{{ saleInfo.Balance_Amount }}</van-col>
+        <van-col span="12">赔付金额:{{ saleInfo.PaidOut_Amoubt }}</van-col>
+      </van-row>
+      <van-row gutter="10">
+       <van-col span="12">售卖总件数:{{ saleInfo.Total_Nums }}</van-col>
+        <van-col span="12">售卖总重量:{{ saleInfo.Totla_Weight }}</van-col>
+      </van-row>
+      <van-row gutter="10">
+        <van-col span="12">售卖均价:{{ saleInfo.Total_Amount }}</van-col>
+        <van-col span="12"></van-col>
       </van-row>
     </div>
     <van-button type="info" size="small" class="frush" @click="getSaleInfo">刷 新</van-button>
     <van-button type="info" size="small" @click="toSellDetail('')" style="margin-left: 20px;">添加售卖信息</van-button>
     <van-cell
-      v-for="(item, index) in saleInfo.accountLists"
+      v-for="(item, index) in accountLists"
       :key="index"
       center
-      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum}`"
-      :label="`${item.IsPayStr} - ${item.CreateTimeStr}`">
-      <template>
-        <van-button type="info" size="mini" v-if="item.IsPay === 0" @click.stop="changePayState(item.id, item.IsPay)">已付</van-button>
+      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum}`">
+      <template #label>
+        <div style="margin-bottom: 5px;">{{ `${item.IsPayStr} ${item.CreateTimeStr}`}}</div>
+        <van-button type="info" size="mini" v-if="item.IsPay === 0" @click.stop="changePayState(item.Id, item.IsPay)"> {{ item.IsPayStr }}</van-button>
         <van-button type="info" size="mini" @click.stop="toSellDetail(item)">编辑</van-button>
-        <van-button type="info" size="mini" @click.stop="deleteSaleInfo(item.id)">删除</van-button>
+        <van-button type="info" size="mini" @click.stop="deleteSaleInfo(item.Id)">删除</van-button>
       </template>
     </van-cell>
   </div>
@@ -43,9 +48,9 @@ export default {
         PaidOut_Amoubt: '',
         Total_Nums: '',
         Total_Weight: '',
-        SaleId: 1,
-        accountLists: []
-      }
+        SaleId: 1
+      },
+      accountLists: []
     }
   },
   created () {
@@ -57,11 +62,12 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('/SaleCar/SaleList', params)
+      this.axios.get('/SaleCar/SaleList', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
             this.saleInfo = data
+            this.accountLists = data.data || []
           } else {
             Toast({
               message: data.msg,
@@ -80,7 +86,7 @@ export default {
       let saleInfo
       if (item) {
         saleInfo = {
-          id: item.id,
+          id: item.Id,
           ProductCount: item.ProductCount,
           ProductWeight: item.ProductWeight,
           UnitPrice: item.UnitPrice,
@@ -153,7 +159,11 @@ export default {
 <style lang="scss" scoped>
 .sell-list {
   .title {
-    padding: 5px;
+    padding: 20px 25px;
+    /deep/ .van-col {
+      text-align: left;
+      margin-bottom: 3px;
+    }
   }
 }
 .van-cell__title {
