@@ -32,22 +32,16 @@ export default {
   },
   methods: {
     editPayfor () {
-      let src = ''
-      if (this.$route.query.payforInfo) {
-        src = '/SaleCar/UpdatePayOut'
-      } else {
-        src = '/SaleCar/AddPayOut'
-      }
       const params = {
         CarId: this.$route.query.CarId,
         SaleId: this.$route.query.SaleId,
         ...this.formData
       }
-      this.axios.post(src, params)
+      this.axios.post('/SaleCar/AddPayOut', params)
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.$route.push({
+            this.$router.push({
               path: '/seller/payforList',
               query: {
                 CarId: this.$route.query.CarId

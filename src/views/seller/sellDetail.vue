@@ -71,7 +71,7 @@ export default {
         .then(res => {
           const data = res.data
           if (data.code === 0) {
-            this.$route.push({
+            this.$router.push({
               path: '/seller/sellList',
               query: {
                 CarId: this.$route.query.CarId

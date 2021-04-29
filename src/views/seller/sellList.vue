@@ -89,8 +89,8 @@ export default {
           id: item.Id,
           ProductCount: item.ProductCount,
           ProductWeight: item.ProductWeight,
-          UnitPrice: item.UnitPrice,
-          TotalPrice: item.TotalPrice,
+          UnitPrice: item.UnitPriceNum,
+          TotalPrice: item.TotalPriceNum,
           Customer: item.Customer,
           CustomerPhone: item.CustomerPhone,
           IsPay: item.IsPay,
@@ -134,7 +134,7 @@ export default {
       const params = {
         id
       }
-      this.axios.post('/SaleCar/DeleteSale', params)
+      this.axios.get('/SaleCar/DeleteSale', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {

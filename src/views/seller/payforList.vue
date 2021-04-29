@@ -3,15 +3,15 @@
     <div class="title">
       赔付金额：{{ payforMoney }}
     </div>
-    <van-button type="info" size="small" @click="toPayforDetail('')" style="margin-bottom: 20px;">添加赔付信息</van-button>
+    <van-button type="info" size="small" @click="toPayforDetail" style="margin-bottom: 20px;">添加赔付信息</van-button>
     <van-cell
       center
       v-for="(item, index) in payforList"
       :key="index"
-      :title="`${item.PayOutMoney}元 - ${item.PayOutReason} - ${item.PayOutTimeStr} - ${item.Customer}`">
+      :title="`赔付金额：${item.PayOutMoney}元  赔付原因：${item.PayOutReason}`"
+      :label="`${item.PayOutTimeStr} - 客户：${item.Customer}`">
       <template>
-        <van-button type="info" size="mini" @click.stop="toPayforDetail(item)">编辑</van-button>
-        <van-button type="info" size="mini" @click.stop="deletePayfor(item.id)">删除</van-button>
+        <van-button type="info" size="mini" @click.stop="deletePayfor(item.Id)">删除</van-button>
       </template>
     </van-cell>
   </div>
@@ -36,7 +36,7 @@ export default {
       const params = {
         CarId: this.$route.query.CarId
       }
-      this.axios.post('/SaleCar/PayOutList', params)
+      this.axios.get('/SaleCar/PayOutList', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
@@ -56,22 +56,12 @@ export default {
           })
         })
     },
-    toPayforDetail (item) {
-      let payforInfo
-      if (item) {
-        payforInfo = {
-          id: item.id,
-          PayOutMoney: item.PayOutMoney,
-          PayOutReason: item.PayOutReason,
-          Customer: item.Customer
-        }
-      }
+    toPayforDetail () {
       this.$router.push({
         path: '/seller/payforDetail',
         query: {
           CarId: this.$route.query.CarId,
-          SaleId: this.SaleId,
-          payforInfo
+          SaleId: this.SaleId
         }
       })
     },
@@ -79,7 +69,7 @@ export default {
       const params = {
         id
       }
-      this.axios.post('/SaleCar/DeletePayOut', params)
+      this.axios.get('/SaleCar/DeletePayOut', { params })
         .then(res => {
           const data = res.data
           if (data.code === 0) {
@@ -108,5 +98,8 @@ export default {
 }
 .van-cell__title {
   text-align: left;
+}
+.van-cell__value {
+  flex: 0 0 40px;
 }
 </style>
