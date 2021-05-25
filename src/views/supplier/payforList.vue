@@ -3,6 +3,7 @@
     <div class="title">
       赔付金额：{{ payforMoney }} 元
     </div>
+    <van-button size="small" class="back" @click="goBack">返 回</van-button>
     <van-cell
       center
       v-for="(item, index) in payforList"
@@ -48,6 +49,15 @@ export default {
             position: 'top'
           })
         })
+    },
+    // 返回
+    goBack () {
+      this.$router.push({
+        path: '/supplier/vehicleList',
+        query: {
+          SupId: this.$route.query.SupId
+        }
+      })
     }
   }
 }
@@ -61,5 +71,9 @@ export default {
 }
 .van-cell__title {
   text-align: left;
+}
+.back {
+  padding: 0 30px;
+  margin-bottom: 30px;
 }
 </style>

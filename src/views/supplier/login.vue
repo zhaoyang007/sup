@@ -27,8 +27,8 @@ export default {
   name: 'SupLogin',
   data () {
     return {
-      userName: '18410109769',
-      passWord: '123456'
+      userName: '',
+      passWord: ''
     }
   },
   methods: {

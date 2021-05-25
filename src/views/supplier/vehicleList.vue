@@ -104,7 +104,8 @@ export default {
       this.$router.push({
         path: '/supplier/sellList',
         query: {
-          CarId: Id
+          CarId: Id,
+          SupId: this.$route.query.SupId
         }
       })
     },
@@ -113,7 +114,8 @@ export default {
       this.$router.push({
         path: '/supplier/payforList',
         query: {
-          CarId: Id
+          CarId: Id,
+          SupId: this.$route.query.SupId
         }
       })
     }
@@ -124,7 +126,7 @@ export default {
 <style lang="scss" scoped>
 .vehicle-list {
   .tabs {
-    margin-bottom: 20px;
+    margin: 20px 0;
   }
   /deep/ .van-tabs__nav--complete {
     padding: 0;

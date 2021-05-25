@@ -69,6 +69,7 @@
     </van-form>
     <div style="margin-top: 100px;">
       <van-button type="info" class="save" @click="editVehicle">保存</van-button>
+      <van-button class="back" @click="goBack">返 回</van-button>
     </div>
   </div>
 </template>
@@ -255,6 +256,15 @@ export default {
             position: 'top'
           })
         })
+    },
+    // 返回
+    goBack () {
+      this.$router.push({
+        path: '/supplier/vehicleList',
+        query: {
+          SupId: this.$route.query.SupId
+        }
+      })
     }
   }
 }
@@ -268,6 +278,9 @@ export default {
   .save {
     padding: 0 29px;
     margin-right: 20px;
+  }
+  .back {
+    padding: 0 30px;
   }
 }
 </style>
