@@ -18,6 +18,20 @@
         <van-col span="12"></van-col>
       </van-row>
     </div>
+    <van-cell>
+      <van-row gutter="10">
+        <van-col span="8">货号分类</van-col>
+        <van-col span="8">剩余数量</van-col>
+        <van-col span="8">总量</van-col>
+      </van-row>
+    </van-cell>
+    <van-cell v-for="(item, index) in saleInfo.categoryList" :key="index">
+      <van-row gutter="10">
+        <van-col span="8">{{ item.FruitCategory }}</van-col>
+        <van-col span="8">{{ item.SaleNumCount }}</van-col>
+        <van-col span="8">{{ item.AllNumCount }}</van-col>
+      </van-row>
+    </van-cell>
     <van-button type="info" size="small" class="frush" @click="getSaleInfo">刷 新</van-button>
     <van-button size="small" class="back" @click="goBack">返 回</van-button>
     <van-cell
@@ -42,7 +56,8 @@ export default {
         PaidOut_Amoubt: '',
         Total_Nums: '',
         Totla_Weight: '',
-        accountLists: []
+        accountLists: [],
+        categoryList: []
       }
     }
   },
@@ -99,7 +114,7 @@ export default {
   text-align: left;
 }
 .frush {
-  margin-bottom: 20px;
+  margin: 20px 0;
   padding: 0 30px;
 }
 .back {

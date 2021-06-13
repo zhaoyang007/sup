@@ -243,7 +243,6 @@ export default {
           const data = res.data
           if (data.code === 0) {
             this.fruitColumns = data.data || []
-            console.log(this.fruitColumns)
           } else {
             Toast({
               message: data.msg,

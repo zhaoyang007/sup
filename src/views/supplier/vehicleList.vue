@@ -16,6 +16,7 @@
         <template #label>
           <van-button type="info" size="mini" @click.stop="toVehicleDetail(item.Id)">编辑</van-button>
           <van-button type="info" size="mini" @click.stop="deleteVehicle(item.Id)">删除</van-button>
+          <van-button type="info" size="mini" @click.stop="toCategoryList(item.Id)">货品详情</van-button>
           <van-button type="info" size="mini" @click.stop="toSellList(item.Id)">售卖信息</van-button>
           <van-button type="info" size="mini" @click.stop="toPayforList(item.Id)">赔付信息</van-button>
         </template>
@@ -98,6 +99,16 @@ export default {
             position: 'top'
           })
         })
+    },
+    // 货品详情
+    toCategoryList (Id) {
+      this.$router.push({
+        path: '/supplier/categoryList',
+        query: {
+          CarId: Id,
+          SupId: this.$route.query.SupId
+        }
+      })
     },
     // 售卖信息
     toSellList (Id) {
