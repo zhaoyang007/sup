@@ -38,7 +38,7 @@
       v-for="(item, index) in saleInfo.accountLists"
       :key="index"
       center
-      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum}`"
+      :title="`件数:${item.ProductCount} 重量:${item.ProductWeight} 总价:${item.TotalPriceNum} 单价:${item.UnitPriceNum} 分类:${item.FruitDetail}`"
       :label="`${item.IsPayStr} - ${item.CreateTimeStr}`" />
   </div>
 </template>
